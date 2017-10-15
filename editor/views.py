@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from .serializer import ImageSerializer
 from .models import Image
-from .effects import rgb_to_gray
+# from .effects import rgb_to_gray
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -22,6 +22,7 @@ class ImageListView(APIView):
     
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
+        print("hue")
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -35,6 +36,3 @@ class ImageView(APIView):
         image = Image.objects.get(id=image_id)
         serializer = ImageSerializer(image)
         return Response(serializer.data)
-    
-    # def post(self, request, image_id, format=None):
-        # image = rgb_to_gray()
