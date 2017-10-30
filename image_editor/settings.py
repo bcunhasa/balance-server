@@ -26,7 +26,7 @@ SECRET_KEY = 'gfr^48@82fd(=lq0_lz@$0&7x$j&ll&(g(=54bh7e-o2^&xmam'
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+# ALLOWED_HOSTS = ["bcunhasa.pythonanywhere.com"]
 
 # Application definition
 

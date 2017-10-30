@@ -4,12 +4,14 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.conf import settings
 
-from editor.views import ImageListView, ImageView
+from editor.views import ImageResultView, ImageCreateView
 
 helper_patterns = [
-    # Return a list with images
-    url(r'^images/$', ImageListView.as_view(), name='images'),
-    url(r'^images/(?P<image_id>\d+)/$', ImageView.as_view(), name='image')
+    # Return the final image
+    url(r'^image/$', ImageResultView.as_view(), name='image'),
+    
+    # Create a new image
+    url(r'^image/create/$', ImageCreateView.as_view(), name='create'),
 ]
 
 urlpatterns = helper_patterns

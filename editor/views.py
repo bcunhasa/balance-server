@@ -1,38 +1,84 @@
 from django.shortcuts import render
+from django.conf import settings
 
-from .serializer import ImageSerializer
-from .models import Image
-# from .effects import rgb_to_gray
+from .serializer import ImageSerializer, EffectSerializer
+from .models import Image, Effect
+from .effects import effects
 
-from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework import status
+from rest_framework.renderers import JSONRenderer
+
+import json
+import base64
+import cv2 as cv
+import numpy as np
+
+# from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 
 def index(request):
     """The server index page"""
     return render(request, 'editor/index.html')
 
-class ImageListView(APIView):
-    """Return a list of all the images"""
+class ImageResultView(APIView):
+    """Post requisition to get the final image"""
     serializer_class = ImageSerializer
     
-    def get(self, request, format=None):
-        serializer = self.serializer_class(Image.objects.all(), many=True)
-        return Response(serializer.data)
-    
-    def post(self, request, format=None):
-        serializer = self.serializer_class(data=request.data)
-        print("hue")
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response({'Message': '403 Forbidden'}, status=status.HTTP_409_CONFLICT)
+    def post(self, request):
+        response = apply_effect(request.data['image'], request.data['effect'])
+        #serializer = ImageSerializer(response)
+        return Response(response)
 
-class ImageView(APIView):
-    """Return a image"""    
+class ImageCreateView(APIView):
+    """Post requisition for a new image"""
+    serializer_class = ImageSerializer
     
-    def get(self, request, image_id, format=None):
-        image = Image.objects.get(id=image_id)
-        serializer = ImageSerializer(image)
-        return Response(serializer.data)
+    def post(self, request):
+        serializer = ImageSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            response = effects_list(base64_image=request.data['image'])
+            return Response(response, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def apply_effect(base64_image, effect):
+    """Do the configuration to apply the effect to the image"""
+    image = base64_to_img(base64_image)
+    
+    if effect == 'Tons de cinza':
+        image = effects.grayscale(image)
+    
+    effect_dict = {}
+    effect_dict['image'] = img_to_base64(image)
+    
+    return json.dumps(effect_dict)
+    
+def effects_list(base64_image):
+    """Create a list of effects"""
+    image = base64_to_img(base64_image)
+    effects_dict = {}
+    
+    effects_dict['grayscale'] = {}
+    effects_dict['grayscale']['title'] = 'Tons de cinza'
+    effects_dict['grayscale']['description'] = 'Transforma a imagem em uma com tons de cinza'
+    effects_dict['grayscale']['preview'] = img_to_base64(effects.grayscale(image))
+    
+    return json.dumps(effects_dict)
+
+def base64_to_img(base64_image):
+    """Converte a base64 image to a openCV image"""
+    encoded_image = base64_image.split(',')[1]
+    string_image = base64.b64decode(encoded_image)
+    np_image = np.fromstring(string_image, dtype=np.uint8)
+    image = cv.imdecode(np_image, cv.IMREAD_COLOR)
+    return image
+
+def img_to_base64(image):
+    """Convete a openCV image to a base64 image"""
+    image = cv.imencode('.png', image)[1].tostring()
+    base64_image = base64.b64encode(image)
+    base64_image = "data:image/png;base64," + base64_image.decode("utf-8")
+    return base64_image
