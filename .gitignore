@@ -1,0 +1,6 @@
+editor/__pycache__/
+editor/migrations/
+api/__pycache__/
+api/migrations/
+env/
+db.sqlite3

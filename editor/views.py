@@ -3,7 +3,10 @@ from django.conf import settings
 
 from .serializer import ImageSerializer, EffectSerializer
 from .models import Image, Effect
+
 from .effects import effects
+from .effects import filters
+from .effects import transformations
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -50,6 +53,10 @@ def apply_effect(base64_image, effect):
     
     if effect == 'Tons de cinza':
         image = effects.grayscale(image)
+    elif effect == 'Correção de iluminação':
+        image = filters.light_corrector(image)
+    elif effect == 'Rotação':
+        image = transformations.rotation(image)
     
     effect_dict = {}
     effect_dict['image'] = img_to_base64(image)
@@ -65,6 +72,16 @@ def effects_list(base64_image):
     effects_dict['grayscale']['title'] = 'Tons de cinza'
     effects_dict['grayscale']['description'] = 'Transforma a imagem em uma com tons de cinza'
     effects_dict['grayscale']['preview'] = img_to_base64(effects.grayscale(image))
+    
+    effects_dict['light_corrector'] = {}
+    effects_dict['light_corrector']['title'] = 'Correção de iluminação'
+    effects_dict['light_corrector']['description'] = 'Corrige a iluminação da fotografia'
+    effects_dict['light_corrector']['preview'] = img_to_base64(filters.light_corrector(image))
+    
+    effects_dict['rotation'] = {}
+    effects_dict['rotation']['title'] = 'Rotação'
+    effects_dict['rotation']['description'] = 'Rotaciona a imagem'
+    effects_dict['rotation']['preview'] = img_to_base64(transformations.rotation(image))
     
     return json.dumps(effects_dict)
 

@@ -4,9 +4,7 @@ from .models import Image, Effect
 from django.core.files.base import ContentFile
 
 import base64
-import six
 import uuid
-import imghdr
 
 class Base64ImageField(serializers.ImageField):
     """Base64 configurations"""

@@ -1,4 +1,4 @@
-#!/home/bruno/Desenvolvimento/Matéria - Desenvolvimento de aplicativos móveis/Projeto/image-editor-server/env/bin/python
+#!/home/bruno/Desenvolvimento/Matéria - Desenvolvimento de aplicativos móveis/Projeto/balance_server/env/bin/python
 """PILdriver, an image-processing calculator using PIL.
 
 An instance of class PILDriver is essentially a software stack machine

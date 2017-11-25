@@ -1,4 +1,4 @@
-#!/home/bruno/Desenvolvimento/Matéria - Desenvolvimento de aplicativos móveis/Projeto/image-editor-server/env/bin/python
+#!/home/bruno/Desenvolvimento/Matéria - Desenvolvimento de aplicativos móveis/Projeto/balance_server/env/bin/python
 #
 # The Python Imaging Library
 # $Id$
