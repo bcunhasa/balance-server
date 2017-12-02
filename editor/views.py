@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.conf import settings
 
-from .serializer import ImageSerializer, EffectSerializer
-from .models import Image, Effect
+from .serializer import ImageSerializer, GallerySerializer
+from .models import Image, Gallery
 
 from .effects import effects
 from .effects import filters
@@ -25,18 +25,35 @@ def index(request):
     """The server index page"""
     return render(request, 'editor/index.html')
 
+
+class GalleryView(APIView):
+    """Post requisition to get the final image"""
+    serializer_class = GallerySerializer
+    
+    def get(self, request):
+        queryset = Gallery.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response({"erro": "O JSON não é válido"}, status=status.HTTP_409_CONFLICT)
+
+
 class ImageResultView(APIView):
     """Post requisition to get the final image"""
-    serializer_class = ImageSerializer
     
     def post(self, request):
         response = apply_effect(request.data['image'], request.data['effect'])
         #serializer = ImageSerializer(response)
         return Response(response)
 
+
 class ImageCreateView(APIView):
     """Post requisition for a new image"""
-    serializer_class = ImageSerializer
     
     def post(self, request):
         serializer = ImageSerializer(data=request.data)
@@ -62,7 +79,7 @@ def apply_effect(base64_image, effect):
     effect_dict['image'] = img_to_base64(image)
     
     return json.dumps(effect_dict)
-    
+
 def effects_list(base64_image):
     """Create a list of effects"""
     image = base64_to_img(base64_image)

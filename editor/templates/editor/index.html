@@ -1,3 +1,123 @@
-<p>Página inicial do servidor de edição</p>
+{% load bootstrap3 %}
+{% load staticfiles %}
 
-<p>Em breve as informações relativas ao servidor serão exibidas nesta página.</p>
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Balance</title>
+    
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{% static 'css/scrolling-nav.css' %}">
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Balance</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">Novidades</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#services">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Sobre</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-primary text-white">
+      <div class="container text-center">
+        <h1>Balance</h1>
+        <p class="lead">Um aplicativo de edição de imagens com o processamento no lado do servidor</p>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Novidades da versão</h2>
+            <p class="lead">A última versão do aplicativo conta com os seguintes melhoramentos:</p>
+            <ul>
+              <li>Divisão dos efeitos em três categorias (efeitos, transformações, e filtros).</li>
+              <li>Adição da Home Page do projeto.</li>
+              <li>Integração com redes sociais.</li>
+            </ul>
+            <p class="lead">Os seguintes bugs foram corrigidos:</p>
+            <ul>
+              <li>Corrigido o bug que deixava a imagem com ruído quando aplicada a transformação de rotação.</li>
+              <li>Corrigido o bug que impedia os slides de passarem com a movimentação do dedo.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Contate-nos</h2>
+            <p class="lead">Você pode contatar o desenvolvedor pelo e-mail bcunhasa@gmail.com.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Sobre</h2>
+            <p class="lead">Este é o projeto final para a disciplina de Desenvolvimento de Aplicativos Móveis Híbridos, do curso de Ciência da Computação da Universidade Federal do Tocantins.</p>
+            <p class="lead">O aplicativo Balance permite ao usuário a aplicação de filtros e efeitos em suas fotos. Todo o processamento das imagens é feito no lado do servidor.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Balance Image Editor 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/jquery/jquery.min.js"></script>
+    <script src="static/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="static/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="static/js/scrolling-nav.js"></script>
+
+  </body>
+
+</html>

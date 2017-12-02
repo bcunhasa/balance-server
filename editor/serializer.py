@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Image, Effect
+from .models import Image, Gallery
 
 from django.core.files.base import ContentFile
 
@@ -30,14 +30,9 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Image
         fields = ['image']
 
-class EffectSerializer(serializers.ModelSerializer):
-    """Effect model serializer"""
-    
-    image = Base64ImageField(
-        max_length=None,
-        use_url=True
-    )
+class GallerySerializer(serializers.ModelSerializer):
+    """Serializer do modelo Campanha"""
     
     class Meta:
-        model = Effect
-        fields = ['id', 'preview', 'title', 'description']
+        model = Gallery
+        fields = '__all__'

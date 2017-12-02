@@ -1,6 +1,8 @@
+balance_server/__pycache__/
 editor/__pycache__/
 editor/migrations/
 api/__pycache__/
 api/migrations/
 env/
 db.sqlite3
+.vscode

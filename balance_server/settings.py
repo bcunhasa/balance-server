@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     
     # Third-party apps
     'rest_framework',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+BOOTSTRAP3 = {
+    'include_jquery': True,
+}

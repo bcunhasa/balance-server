@@ -8,12 +8,10 @@ class Image(models.Model):
     def __str__(self):
         return str(self.image)
 
-class Effect(models.Model):
-    """Representa um efeito a ser aplicado na imagem"""
-    default_url = 'previews/none/no_preview.png'
-    preview = models.ImageField(upload_to='previews/', default=default_url)
-    title = models.TextField()
-    description = models.TextField()
+class Gallery(models.Model):
+    """Representa o item de galeria que será manipulado nas requisições POST e GET"""
+    uri = models.CharField(max_length=200)
+    effect = models.CharField(max_length=50)
     
     def __str__(self):
-        return self.title
+        return str(self.uri)
